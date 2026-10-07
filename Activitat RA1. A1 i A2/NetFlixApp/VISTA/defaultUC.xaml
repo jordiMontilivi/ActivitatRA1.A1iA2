@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="NetFlixApp.VISTA.defaultUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NetFlixApp.VISTA"
+             mc:Ignorable="d" 
+             d:DesignWidth="700"
+             d:DesignHeight="400"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+        VerticalAlignment="Center">
+
+            <TextBlock Text="Benvingut a NetFlix App"
+           FontSize="28"
+           FontWeight="Bold"
+           Foreground="#7F1720"
+           HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Gestió i consulta de dades de pel·lícules"
+           FontSize="15"
+           Foreground="#6B7280"
+           Margin="0,8,0,25"
+           HorizontalAlignment="Center"/>
+
+            <Border Background="#F8E7E9"
+        CornerRadius="8"
+        Padding="20">
+
+                <StackPanel>
+
+                    <TextBlock Text="Seleccioneu una operació"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Foreground="#7F1720"
+                   HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="Utilitzeu el menú lateral per començar."
+                   FontSize="13"
+                   Foreground="#555555"
+                   Margin="0,5,0,0"
+                   HorizontalAlignment="Center"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

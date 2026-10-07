@@ -23,11 +23,38 @@ namespace NetFlixApp.VISTA
         {
             InitializeComponent();
             dao = DAOFactory.CreateDAO();
+            RegioPrincipal.Content = new defaultUC();
         }
 
         private void BtnGenerarFitxerGenere_Click(object sender, RoutedEventArgs e)
         {
             RegioPrincipal.Content = new FitxerGenere(dao);
+        }
+
+        private void BtnBuscarPeliculaIndex_Click(object sender, RoutedEventArgs e)
+        {
+            RegioPrincipal.Content = new BuscarPeliculaIndexUC(dao);
+        }
+
+        private void BtnBuscarPeliculaId_Click(object sender, RoutedEventArgs e)
+        {
+            RegioPrincipal.Content = new BuscarPeliculaIdUC(dao);
+        }
+
+        private void BtnGenerarLlistaPelicules_Click(object sender, RoutedEventArgs e)
+        {
+
+            RegioPrincipal.Content = new LlistaPeliculesUC(dao);
+        }
+
+        private void BtnEscriureFitxerPeliculesOrdenat_Click(object sender, RoutedEventArgs e)
+        {
+            RegioPrincipal.Content = new FitxerArrayOrdenatUC(dao);
+        }
+
+        private void BtnFusionarFitxersPelicules_Click(object sender, RoutedEventArgs e)
+        {
+            RegioPrincipal.Content = new MergeFilesUC(dao);
         }
     }
 }

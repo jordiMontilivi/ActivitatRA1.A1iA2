@@ -7,41 +7,92 @@
         mc:Ignorable="d"
         Title="NetFlix" Height="450" Width="800">
 
-    <DockPanel Background="red">
+    <Window.Resources>
+
+        <Style x:Key="MenuButtonStyle"
+           TargetType="Button">
+
+            <Setter Property="Background" Value="#A61E2A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="10,4"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+        </Style>
+
+    </Window.Resources>
+    <DockPanel Background="#7F1720">
 
         <!-- Menu Header -->
         <Border DockPanel.Dock="Top"
          Height="50"
-         Background="red">
+         Background="#A61E2A">
             
             <TextBlock Text="NetFlix App"
                 Foreground="White"
                 FontSize="24"
                 VerticalAlignment="Center"
-                Margin="20,0"/>
+                Margin="20,0"
+                FontWeight="Bold"/>
 
         </Border>
         
         <!-- Footer -->
-        <StatusBar DockPanel.Dock="Bottom" Background="red">
-            <TextBlock Text="Jordi Montilivi" Foreground = "White" />
+        <StatusBar DockPanel.Dock="Bottom" Background="#A61E2A">
+            <TextBlock Text="Jordi Montilivi" 
+                       Foreground = "White" 
+                       FontSize="11"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="15,0"/>
+
         </StatusBar>
 
         <!-- Menu Lateral -->
         <StackPanel DockPanel.Dock="Left"
              Width="180"
-             Background ="red">
+             Background ="#7F1720">
+            <TextBlock Grid.Row="0"
+                Text="OPERACIONS"
+                Foreground="#F8D7DA"
+                FontSize="11"
+                FontWeight="Bold"
+                Margin="15,20,15,8"/>
 
-            <Button x:Name="BtnGenerarFitxerGenere" Content="GENERAR FITXER GENERE" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold" Click="BtnGenerarFitxerGenere_Click"/>
-            <Button x:Name="BtnBuscarPeliculaIndex" Content="BUSCAR PELICULA INDEX" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
-            <Button x:Name="BtnBuscarPeliculaId" Content="BUSCAR PELICULA ID" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
-            <Button x:Name="BtnGenerarLlistaPelicules" Content="GENERAR LLISTA PELICULES" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
-            <Button x:Name="BtnEscriureFitxerPeliculesOrdenat" Content="ESCRIURE FITXER PELICULES ORDENAT" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
-            <Button x:Name="BtnFusionarFitxersPelicules" Content="FUSIONAR FITXERS PELICULES" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold" Foreground="Black"/>
+            <Button x:Name="BtnGenerarFitxerGenere"
+        Content="GENERAR FITXER GÈNERE"
+        Style="{StaticResource MenuButtonStyle}"
+        Click="BtnGenerarFitxerGenere_Click"/>
+
+            <Button x:Name="BtnBuscarPeliculaIndex"
+        Content="BUSCAR PEL·LÍCULA INDEX"
+        Style="{StaticResource MenuButtonStyle}" Click="BtnBuscarPeliculaIndex_Click"/>
+
+            <Button x:Name="BtnBuscarPeliculaId"
+        Content="BUSCAR PEL·LÍCULA ID"
+        Style="{StaticResource MenuButtonStyle}" Click="BtnBuscarPeliculaId_Click"/>
+
+            <Button x:Name="BtnGenerarLlistaPelicules"
+        Content="GENERAR LLISTA PEL·LÍCULES"
+        Style="{StaticResource MenuButtonStyle}" Click="BtnGenerarLlistaPelicules_Click"/>
+
+            <Button x:Name="BtnEscriureFitxerPeliculesOrdenat"
+        Content="ESCRIURE FITXER ORDENAT"
+        Style="{StaticResource MenuButtonStyle}" Click="BtnEscriureFitxerPeliculesOrdenat_Click"/>
+
+            <Button x:Name="BtnFusionarFitxersPelicules"
+        Content="FUSIONAR FITXERS"
+        Style="{StaticResource MenuButtonStyle}" Click="BtnFusionarFitxersPelicules_Click"/>
+
 
         </StackPanel>
 
-        <Grid Background="red" Margin="0,0,15,0">
+        <Grid Background="#7F1720" Margin="0,15,15,15">
             <Border Background="White"
             CornerRadius="10"
             Padding="5"

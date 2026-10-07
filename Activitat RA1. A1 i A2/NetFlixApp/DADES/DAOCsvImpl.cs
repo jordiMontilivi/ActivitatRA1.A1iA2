@@ -245,9 +245,12 @@ namespace NetFlixApp.DADES
         public int Merge(string inputFileName1, string inputFilename2, string outputFileName)
         {
             int contador = 0;
-            using (FileStream fsRawTitles = new FileStream(Path.Combine(PATH, inputFileName1), FileMode.Open, FileAccess.Read))
-            using (FileStream fsRawTitles2 = new FileStream(Path.Combine(PATH, inputFilename2), FileMode.Open, FileAccess.Read))
-            using (FileStream fsOutput = new FileStream(Path.Combine(PATH, outputFileName), FileMode.Create, FileAccess.Write))
+            //using (FileStream fsRawTitles = new FileStream(Path.Combine(PATH, inputFileName1), FileMode.Open, FileAccess.Read))
+            //using (FileStream fsRawTitles2 = new FileStream(Path.Combine(PATH, inputFilename2), FileMode.Open, FileAccess.Read))
+            //using (FileStream fsOutput = new FileStream(Path.Combine(PATH, outputFileName), FileMode.Create, FileAccess.Write))
+            using (FileStream fsRawTitles = new FileStream(inputFileName1, FileMode.Open, FileAccess.Read))
+            using (FileStream fsRawTitles2 = new FileStream(inputFilename2, FileMode.Open, FileAccess.Read))
+            using (FileStream fsOutput = new FileStream(outputFileName, FileMode.Create, FileAccess.Write))
             using (StreamReader srRawTitles = new StreamReader(fsRawTitles))
             using (StreamReader srRawTitles2 = new StreamReader(fsRawTitles2))
             using (StreamWriter swOutput = new StreamWriter(fsOutput))

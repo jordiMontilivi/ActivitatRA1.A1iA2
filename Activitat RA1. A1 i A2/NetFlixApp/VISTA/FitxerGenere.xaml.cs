@@ -31,76 +31,77 @@ namespace NetFlixApp.VISTA
                     "Error",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
-
-                return;
-            }
-
-            // Carpeta on volem que s'obri inicialment el SaveFileDialog
-            //string outputDirectory = System.IO.Path.Combine(
-            //    AppDomain.CurrentDomain.BaseDirectory,
-            //    "Fitxers");
-            string outputDirectory = System.IO.Path.GetFullPath(
-                System.IO.Path.Combine(
-                    AppContext.BaseDirectory,
-                    "..", "..", "..",
-                    "DADES",
-                    "DATA"
-                )
-            );
-
-
-            // Si no existeix, la creem
-            Directory.CreateDirectory(outputDirectory);
-
-            SaveFileDialog dialog = new SaveFileDialog
-            {
-                Title = "Guardar fitxer CSV",
-                Filter = "Fitxers CSV (*.csv)|*.csv",
-                DefaultExt = ".csv",
-                AddExtension = true,
-                FileName = $"{nomFitxer}_{genere}.csv"
-            };
-
-            if (dialog.ShowDialog() != true)
-                return;
-
-            string outputFile = dialog.FileName;
-
-            int numPelicules = dao.SelectByGenre(
-            genere,
-            outputFile);
-
-
-            if (numPelicules == 0)
-            {
-                TxtResultat.Text =
-                    $"No s'ha trobat cap pel·lícula del gènere '{genere}' i no s'ha generat cap fitxer.";
             }
             else
             {
-                TxtResultat.Text =
-                    $"S'han trobat {numPelicules} pel·lícules del gènere '{genere}' i al fitxer '{outputFile}'.";
 
-                Process.Start(new ProcessStartInfo
+                // Carpeta on volem que s'obri inicialment el SaveFileDialog
+                //string outputDirectory = System.IO.Path.Combine(
+                //    AppDomain.CurrentDomain.BaseDirectory,
+                //    "Fitxers");
+                string outputDirectory = System.IO.Path.GetFullPath(
+                    System.IO.Path.Combine(
+                        AppContext.BaseDirectory,
+                        "..", "..", "..",
+                        "DADES",
+                        "DATA"
+                    )
+                );
+
+
+                // Si no existeix, la creem
+                Directory.CreateDirectory(outputDirectory);
+
+                SaveFileDialog dialog = new SaveFileDialog
                 {
-                    FileName = outputFile,
-                    UseShellExecute = true
-                });
+                    Title = "Guardar fitxer CSV",
+                    Filter = "Fitxers CSV (*.csv)|*.csv",
+                    DefaultExt = ".csv",
+                    AddExtension = true,
+                    FileName = $"{nomFitxer}_{genere}.csv"
+                };
 
-                Process.Start(new ProcessStartInfo
+                if (dialog.ShowDialog() != true)
+                    return;
+
+                string outputFile = dialog.FileName;
+
+                int numPelicules = dao.SelectByGenre(
+                genere,
+                outputFile);
+
+
+                if (numPelicules == 0)
                 {
-                    FileName = "notepad.exe",
-                    Arguments = $"\"{outputFile}\"",
-                    UseShellExecute = true
-                });
+                    TxtResultat.Text =
+                        $"No s'ha trobat cap pel·lícula del gènere '{genere}' i no s'ha generat cap fitxer.";
+                }
+                else
+                {
+                    TxtResultat.Text =
+                        $"S'han trobat {numPelicules} pel·lícules del gènere '{genere}' i al fitxer '{outputFile}'.";
+
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = outputFile,
+                        UseShellExecute = true
+                    });
+
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "notepad.exe",
+                        Arguments = $"\"{outputFile}\"",
+                        UseShellExecute = true
+                    });
 
 
-                // Obrim la finestra que mostra el CSV
-                CsvWindow finestra = new CsvWindow(outputFile);
+                    // Obrim la finestra que mostra el CSV
+                    CsvWindow finestra = new CsvWindow(outputFile);
 
-                finestra.Owner = Window.GetWindow(this);
+                    finestra.Owner = Window.GetWindow(this);
 
-                finestra.Show();
+                    finestra.Show();
+                }
             }
 
         }

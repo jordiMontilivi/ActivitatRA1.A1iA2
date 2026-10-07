@@ -135,7 +135,7 @@ namespace NetFlixApp.MODEL
         /// </summary>
         /// <param name="values">La llista de strings a convertir.</param>
         /// <returns>La representació en format CSV de la llista.</returns>
-        private string LlistaToString(List<string>? values)
+        public string LlistaToString(List<string>? values)
         {
             string resultat;
             if (values == null || values.Count == 0)
