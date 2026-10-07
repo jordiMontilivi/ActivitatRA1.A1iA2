@@ -62,7 +62,42 @@
 
         </StackPanel>
 
-        <!-- RESULTADOS -->
+        <!-- RESULTATS -->
+
+        <Border Grid.Row="2"
+            Background="#F5F5F5"
+            BorderBrush="#D0D0D0"
+            BorderThickness="1"
+            Padding="8"
+            Margin="0,0,0,10">
+
+            <StackPanel Orientation="Horizontal">
+
+                <TextBlock Text="Visualitzar amb:"
+                FontWeight="Bold"
+                VerticalAlignment="Center"
+                Margin="0,0,15,0"/>
+
+                <RadioButton x:Name="RbEditor"
+                    Content="Editor per defecte"
+                    IsChecked="True"
+                    VerticalAlignment="Center"
+                    Margin="0,0,15,0"/>
+
+                <RadioButton x:Name="RbNotepad"
+                    Content="Notepad"
+                    VerticalAlignment="Center"
+                    Margin="0,0,15,0"/>
+
+                <RadioButton x:Name="RbCsv"
+                    Content="Visor CSV"
+                    VerticalAlignment="Center"/>
+
+            </StackPanel>
+
+        </Border>
+
+        <!--
         <DataGrid x:Name="DgPelicules"
                   Grid.Row="2"
                   AutoGenerateColumns="False"
@@ -90,6 +125,7 @@
             </DataGrid.Columns>
 
         </DataGrid>
+        -->
 
         <!-- INFORMACIÓN -->
         <Border Grid.Row="3"

@@ -58,7 +58,7 @@ namespace NetFlixApp.VISTA
                     Filter = "Fitxers CSV (*.csv)|*.csv",
                     DefaultExt = ".csv",
                     AddExtension = true,
-                    FileName = $"{nomFitxer}_{genere}.csv"
+                    FileName = $"{nomFitxer}.csv"
                 };
 
                 if (dialog.ShowDialog() != true)
@@ -78,30 +78,40 @@ namespace NetFlixApp.VISTA
                 }
                 else
                 {
+
                     TxtResultat.Text =
                         $"S'han trobat {numPelicules} pel·lícules del gènere '{genere}' i al fitxer '{outputFile}'.";
 
-                    Process.Start(new ProcessStartInfo
+                    if (RbEditor.IsChecked == true)
                     {
-                        FileName = outputFile,
-                        UseShellExecute = true
-                    });
-
-                    Process.Start(new ProcessStartInfo
+                        // Obrim un fitxer csv amb el etitor de text per defecte
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = outputFile,
+                            UseShellExecute = true
+                        });
+                    }
+                    else if (RbNotepad.IsChecked == true)
                     {
-                        FileName = "notepad.exe",
-                        Arguments = $"\"{outputFile}\"",
-                        UseShellExecute = true
-                    });
+                        // Obrim el fitxer CSV amb Notepad
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = "notepad.exe",
+                            Arguments = $"\"{outputFile}\"",
+                            UseShellExecute = true
+                        });
+                    }
+                    else if (RbCsv.IsChecked == true)
+                    {
+                        // Obrim la finestra que mostra el CSV
+                        CsvWindow finestra = new CsvWindow(outputFile);
 
+                        finestra.Owner = Window.GetWindow(this);
 
-                    // Obrim la finestra que mostra el CSV
-                    CsvWindow finestra = new CsvWindow(outputFile);
-
-                    finestra.Owner = Window.GetWindow(this);
-
-                    finestra.Show();
+                        finestra.Show();
+                    }
                 }
+
             }
 
         }

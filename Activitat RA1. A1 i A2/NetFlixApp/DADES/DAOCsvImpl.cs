@@ -81,13 +81,14 @@ namespace NetFlixApp.DADES
                         if (swRawTitles == null)
                         {
                             swRawTitles = new StreamWriter(Path.Combine(PATH, outputFile));
-                            swRawTitles.WriteLine("index;id;title;genres"); // Escrivim l'encapçalament del fitxer CSV de sortida sols 1 vegada.
+                            swRawTitles.Write("index;id;title;genres"); // Escrivim l'encapçalament del fitxer CSV de sortida sols 1 vegada.
                         }
                         //swRawTitles.WriteLine($"{rawTitle.Index};{rawTitle.Id};{RawTitle.EscaparCsv(rawTitle.Title)};{LlistaToString(rawTitle.Genres)}");
-                        swRawTitles.WriteLine($"{rawTitle.Index};{rawTitle.Id};{rawTitle.Title};{LlistaToString(rawTitle.Genres)}");
+                        swRawTitles.Write($"\n{rawTitle.Index};{rawTitle.Id};{rawTitle.Title};{LlistaToString(rawTitle.Genres)}");
                         count++;
                     }
                 }
+
                 swRawTitles?.Close();
             }
 
@@ -234,10 +235,10 @@ namespace NetFlixApp.DADES
             using (FileStream fsRawTitles = new FileStream(Path.Combine(PATH, outputFileName), FileMode.Create, FileAccess.Write))
             using (StreamWriter swRawTitles = new StreamWriter(fsRawTitles))
             {
-                swRawTitles.WriteLine("index;id;title;type;release_year;age_certification;runtime;genres;production_countries;seasons;imdb_id;imdb_score;imdb_votes"); // Escrivim l'encapçalament del fitxer CSV de sortida sols 1 vegada.
+                swRawTitles.Write("index,id,title,type,release_year,age_certification,runtime,genres,production_countries,seasons,imdb_id,imdb_score,imdb_votes"); // Escrivim l'encapçalament del fitxer CSV de sortida sols 1 vegada.
                 foreach (var title in titles)
                 {
-                    swRawTitles.WriteLine(title);
+                    swRawTitles.Write($"\n{title}");
                 }
             }
         }
@@ -265,7 +266,7 @@ namespace NetFlixApp.DADES
                 if (linia1 != null || linia2 != null)
                 {
                     // Si almenys un dels fitxers té dades, escrivim l'encapçalament al fitxer de sortida.
-                    swOutput.WriteLine("index;id;title;type;release_year;age_certification;runtime;genres;production_countries;seasons;imdb_id;imdb_score;imdb_votes");
+                    swOutput.Write("index,id,title,type,release_year,age_certification,runtime,genres,production_countries,seasons,imdb_id,imdb_score,imdb_votes");
                 }
                 while (linia1 != null && linia2 != null)
                 {
@@ -274,17 +275,17 @@ namespace NetFlixApp.DADES
                     rt2 = CrearRawTitle(linia2);
                     if(rt1.ImdbScore < rt2.ImdbScore)
                     {
-                        swOutput.WriteLine(rt1);
+                        swOutput.Write($"\n{rt1}");
                         linia1 = srRawTitles.ReadLine();
                     }
                     else if (rt1.ImdbScore.Equals(rt2.ImdbScore))// Si rt1.ImdbScore i rt2.ImdbScore són iguals hem de comprovar si son iguals per a no escriure duplicats al fitxer de sortida.
                     {
                         if (rt1.Equals(rt2)) // Si són iguals, només escrivim un dels dos i avancem amb les dues línies.
-                            swOutput.WriteLine(rt1);
+                            swOutput.Write($"\n{rt1}");
                         else
                         {
-                            swOutput.WriteLine(rt1);
-                            swOutput.WriteLine(rt2);
+                            swOutput.Write($"\n{rt1}");
+                            swOutput.Write($"\n{rt2}");
                             contador++;
                         }
 
@@ -293,20 +294,20 @@ namespace NetFlixApp.DADES
                     }
                     else
                     {
-                        swOutput.WriteLine(rt2);
+                        swOutput.Write($"\n{rt2}");
                         linia2 = srRawTitles2.ReadLine();
                     }
                     contador++;
                 }
                 while(linia1 != null)
                 {
-                    swOutput.WriteLine(linia1);
+                    swOutput.Write($"\n{linia1}");
                     linia1 = srRawTitles.ReadLine();
                     contador++;
                 }
                 while(linia2 != null)
                 {
-                    swOutput.WriteLine(linia2);
+                    swOutput.Write($"\n{linia2}");
                     linia2 = srRawTitles2.ReadLine();
                     contador++;
                 }

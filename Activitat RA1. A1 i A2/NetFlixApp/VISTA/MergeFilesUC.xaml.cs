@@ -2,6 +2,7 @@
 using NetFlixApp.DADES;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -103,6 +104,37 @@ namespace NetFlixApp.VISTA
                     TxtFitxer2.Text,
                     TxtFitxerSortida.Text
                 );
+
+
+
+                if (RbEditor.IsChecked == true)
+                {
+                    // Obrim un fitxer csv amb el etitor de text per defecte
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = TxtFitxerSortida.Text,
+                        UseShellExecute = true
+                    });
+                }
+                else if (RbNotepad.IsChecked == true)
+                {
+                    // Obrim el fitxer CSV amb Notepad
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = "notepad.exe",
+                        Arguments = $"\"{TxtFitxerSortida.Text}\"",
+                        UseShellExecute = true
+                    });
+                }
+                else if (RbCsv.IsChecked == true)
+                {
+                    // Obrim la finestra que mostra el CSV
+                    CsvWindow finestra = new CsvWindow(TxtFitxerSortida.Text);
+
+                    finestra.Owner = Window.GetWindow(this);
+
+                    finestra.Show();
+                }
 
 
                 // Mostrem el resultat
