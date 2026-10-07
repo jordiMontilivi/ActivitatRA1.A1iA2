@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NetFlixApp.VISTA"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="NetFlix" Height="450" Width="800">
 
-    </Grid>
+    <DockPanel Background="red">
+
+        <!-- Menu Header -->
+        <Border DockPanel.Dock="Top"
+         Height="50"
+         Background="red">
+            
+            <TextBlock Text="NetFlix App"
+                Foreground="White"
+                FontSize="24"
+                VerticalAlignment="Center"
+                Margin="20,0"/>
+
+        </Border>
+        
+        <!-- Footer -->
+        <StatusBar DockPanel.Dock="Bottom" Background="red">
+            <TextBlock Text="Jordi Montilivi" Foreground = "White" />
+        </StatusBar>
+
+        <!-- Menu Lateral -->
+        <StackPanel DockPanel.Dock="Left"
+             Width="180"
+             Background ="red">
+
+            <Button x:Name="BtnGenerarFitxerGenere" Content="GENERAR FITXER GENERE" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold" Click="BtnGenerarFitxerGenere_Click"/>
+            <Button x:Name="BtnBuscarPeliculaIndex" Content="BUSCAR PELICULA INDEX" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
+            <Button x:Name="BtnBuscarPeliculaId" Content="BUSCAR PELICULA ID" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
+            <Button x:Name="BtnGenerarLlistaPelicules" Content="GENERAR LLISTA PELICULES" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
+            <Button x:Name="BtnEscriureFitxerPeliculesOrdenat" Content="ESCRIURE FITXER PELICULES ORDENAT" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold"/>
+            <Button x:Name="BtnFusionarFitxersPelicules" Content="FUSIONAR FITXERS PELICULES" Height="30" Margin="10" Background="DarkRed" FontWeight="Bold" Foreground="Black"/>
+
+        </StackPanel>
+
+        <Grid Background="red" Margin="0,0,15,0">
+            <Border Background="White"
+            CornerRadius="10"
+            Padding="5"
+            BorderBrush="#DDDDDD"
+            BorderThickness="1">
+                
+                <ContentControl x:Name="RegioPrincipal"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"/>
+                
+            </Border>
+
+        </Grid>
+
+    </DockPanel>
 </Window>

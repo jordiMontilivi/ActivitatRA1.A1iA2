@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using System.Globalization;
 
 namespace NetFlixApp.MODEL
 {
@@ -32,7 +32,7 @@ namespace NetFlixApp.MODEL
         public double? ImdbVotes { get; set; }
 
         /// <summary>
-        /// Compara dos objectes RawTitle segons el seu Index.
+        /// Compara dos objectes RawTitle segons el seu ImdbScore
         /// </summary>
         public int CompareTo(RawTitle? other)
         {
@@ -41,7 +41,7 @@ namespace NetFlixApp.MODEL
                 resultat = 1;
 
             else
-                resultat = Index.CompareTo(other.Index);
+                resultat = Nullable.Compare(ImdbScore, other.ImdbScore);
 
             return resultat;
         }
@@ -55,7 +55,7 @@ namespace NetFlixApp.MODEL
         }
 
         /// <summary>
-        /// Dos RawTitle es consideren iguals si tenen el mateix Title.
+        /// Dos RawTitle es consideren iguals si tenen el mateix Id.
         /// </summary>
         public bool Equals(RawTitle? other)
         {
@@ -63,7 +63,7 @@ namespace NetFlixApp.MODEL
             if (other == null)
                 resultat = false;
             else
-                resultat = string.Equals(Title, other.Title);
+                resultat = string.Equals(Id, other.Id);
 
             return resultat;
         }
@@ -73,7 +73,8 @@ namespace NetFlixApp.MODEL
         /// </summary>
         public override int GetHashCode()
         {
-            return Title?.GetHashCode(StringComparison.Ordinal) ?? 0;
+            // Utilitzem l'id per generar el hash code, ja que és el camp que utilitzem per comparar la igualtat.
+            return StringComparer.Ordinal.GetHashCode(Id ?? string.Empty);
         }
 
         /// <summary>
@@ -87,47 +88,50 @@ namespace NetFlixApp.MODEL
         public override string ToString()
         {
             //string rawTitleString = $"{Index},{Id},{Title},{Type},{ReleaseYear},{AgeCertification},{Runtime},{LlistaToString(Genres)},{LlistaToString(ProductionCountries)},{Seasons},{ImdbId},{ImdbScore},{ImdbVotes}";
-            //string resultat = string.Join(",",
-            //        Index,
-            //        Id,
-            //        Title,
-            //        Type,
-            //        ReleaseYear,
-            //        AgeCertification,
-            //        Runtime,
-            //        LlistaToString(Genres),
-            //        LlistaToString(ProductionCountries),
-            //        Seasons,
-            //        ImdbId,
-            //        ImdbScore,
-            //        ImdbVotes
-            //        );
-            //return resultat;
+            string resultat = string.Join(",",
+                Index,
+                EscaparCsv(Id),
+                EscaparCsv(Title),
+                EscaparCsv(Type),
+                ReleaseYear?.ToString(CultureInfo.InvariantCulture),
+                EscaparCsv(AgeCertification),
+                Runtime?.ToString(CultureInfo.InvariantCulture),
+                LlistaToString(Genres),
+                LlistaToString(ProductionCountries),
+                Seasons?.ToString(CultureInfo.InvariantCulture),
+                EscaparCsv(ImdbId),
+                ImdbScore?.ToString(CultureInfo.InvariantCulture),
+                ImdbVotes?.ToString(CultureInfo.InvariantCulture)
+            );
+            return resultat;
 
-            var sb = new StringBuilder();
+            //He estat revisant el guany per utilitzar StringBuilder en lloc de string.Join, i en aquest cas, per a un nombre limitat de camps, la diferència de rendiment és mínima.
+            //En cas de fer un bucle amb concatenacions si seria plenament recomanable utilitzar StringBuilder, però en aquest cas, amb un nombre fix de camps, string.Join és més net i llegible.
 
-            sb.Append(Index); sb.Append(',');
-            sb.Append(Id); sb.Append(',');
-            sb.Append(Title); sb.Append(',');
-            sb.Append(Type); sb.Append(',');
-            sb.Append(ReleaseYear); sb.Append(',');
-            sb.Append(AgeCertification); sb.Append(',');
-            sb.Append(Runtime); sb.Append(',');
-            sb.Append(LlistaToString(Genres)); sb.Append(',');
-            sb.Append(LlistaToString(ProductionCountries)); sb.Append(',');
-            sb.Append(Seasons); sb.Append(',');
-            sb.Append(ImdbId); sb.Append(',');
-            sb.Append(ImdbScore); sb.Append(',');
-            sb.Append(ImdbVotes);
+            //var sb = new StringBuilder();
 
-            return sb.ToString();
+            //sb.Append(Index); sb.Append(',');
+            //sb.Append(Id); sb.Append(',');
+            //sb.Append(Title); sb.Append(',');
+            //sb.Append(Type); sb.Append(',');
+            //sb.Append(ReleaseYear); sb.Append(',');
+            //sb.Append(AgeCertification); sb.Append(',');
+            //sb.Append(Runtime); sb.Append(',');
+            //sb.Append(LlistaToString(Genres)); sb.Append(',');
+            //sb.Append(LlistaToString(ProductionCountries)); sb.Append(',');
+            //sb.Append(Seasons); sb.Append(',');
+            //sb.Append(ImdbId); sb.Append(',');
+            //sb.Append(ImdbScore); sb.Append(',');
+            //sb.Append(ImdbVotes);
+
+            //return sb.ToString();
         }
 
         /// <summary>
         /// Converteix una List<string> al format:
         /// ssi els valors són null o la llista està buida -> ""
         /// si tenim un element -> ['element'] 
-        /// si tenim diversos elements -> "['element1','element2','elementN']"
+        /// si tenim diversos elements -> "['element1','element2', ..., 'elementN']"
         /// </summary>
         /// <param name="values">La llista de strings a convertir.</param>
         /// <returns>La representació en format CSV de la llista.</returns>
@@ -145,6 +149,25 @@ namespace NetFlixApp.MODEL
 
             return resultat;
         }
+        /// <summary>
+        /// Escapa un valor perquè sigui segur per a ser utilitzat en un fitxer CSV, ens permet posar " dintre d'un camp que te algun caracter especial com , o " o salts de línia.
+        /// </summary>
+        /// <param name="valor">El valor a escapar.</param>
+        /// <returns>El valor escapat.</returns>
+        public static string EscaparCsv(string? valor)
+        {
+            if (string.IsNullOrEmpty(valor))
+                return string.Empty;
+            //Detecta si trobem algun caracter , o " dintre d'un camp per poder escapar-lo correctament. També escapa els salts de línia.
+            if (valor.Contains(',') || valor.Contains('"') || valor.Contains('\n'))
+            {
+                valor = valor.Replace("\"", "\"\"");
+                return $"\"{valor}\"";
+            }
+
+            return valor;
+        }
+
 
     }
 }

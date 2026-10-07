@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="NetFlixApp.VISTA.FitxerGenere"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NetFlixApp.VISTA"
+             mc:Ignorable="d" 
+             d:DesignWidth="700"
+d:DesignHeight="400"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <!-- Títol -->
+            <RowDefinition Height="Auto"/>
+            <!-- Filtre -->
+            <RowDefinition Height="Auto"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="*"/>
+            <!-- Resultat -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- TÍTOL -->
+        <TextBlock Grid.Row="0"
+                   Text="Buscar pel·lícules per Gènere"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Margin="0,0,0,20"/>
+
+        <!-- FILTRE -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,15">
+
+            <TextBlock Text="Gènere:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"/>
+
+            <TextBox x:Name="TxtGenere"
+                     Width="60"
+                     Height="30"
+                     Margin="0,0,10,0"
+                     FontSize="14"
+                     VerticalContentAlignment="Center"/>
+            
+            <TextBlock Text="Fitxer Sortida:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"/>
+
+            <TextBox x:Name="TxtFitxerSortida"
+                     Width="150"
+                     Height="30"
+                     Margin="0,0,10,0"
+                     FontSize="14"
+                     VerticalContentAlignment="Center"/>
+
+            <Button x:Name="BtnGenerarCsvGenere" Content="Buscar"
+                    Width="50"
+                    Height="30"
+                    Click="BtnGenerarCsvGenere_Click"/>
+
+        </StackPanel>
+
+        <!-- RESULTADOS -->
+        <DataGrid x:Name="DgPelicules"
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="Index"
+                                    Binding="{Binding Index}"
+                                    Width="80"/>
+
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    Width="100"/>
+
+                <DataGridTextColumn Header="Títol"
+                                    Binding="{Binding Title}"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="Gèneres"
+                                    Binding="{Binding Genres}"
+                                    Width="250"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <!-- INFORMACIÓN -->
+        <Border Grid.Row="3"
+                Margin="0,15,0,0"
+                Padding="10"
+                Background="#F0F0F0"
+                BorderBrush="#D0D0D0"
+                BorderThickness="1">
+
+            <TextBlock x:Name="TxtResultat"
+                       Text="Seleccione un gènere per començar."
+                       FontSize="14"
+                       FontWeight="SemiBold"/>
+
+        </Border>
+    </Grid>
+</UserControl>
